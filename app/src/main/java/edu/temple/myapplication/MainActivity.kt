@@ -6,6 +6,7 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
@@ -35,13 +36,21 @@ class MainActivity : AppCompatActivity() {
             , BIND_AUTO_CREATE
         )
 
-        findViewById<Button>(R.id.startButton).setOnClickListener {
+        val startButton = findViewById<Button>(R.id.startButton)
 
+        findViewById<Button>(R.id.startButton).setOnClickListener {
+            if(!timerBinder.paused){
+                startButton.text = "Pause"
+                timerBinder.pause()
+            } else{
+                startButton.text = "Start"
+                timerBinder.start(100)
+            }
 
         }
         
         findViewById<Button>(R.id.stopButton).setOnClickListener {
-
+            timerBinder.stop()
         }
     }
 
@@ -49,4 +58,6 @@ class MainActivity : AppCompatActivity() {
         unbindService(serviceConnection)
         super.onDestroy()
     }
+
+
 }
