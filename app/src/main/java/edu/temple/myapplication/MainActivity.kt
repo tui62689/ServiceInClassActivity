@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var timerBinder: TimerService.TimerBinder
     private var isConnected = false
+    private lateinit var countdownTextView: TextView
 
     val serviceConnection = object : ServiceConnection{
         override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        countdownTextView = findViewById(R.id.textView)
 
         bindService(
             Intent(this, TimerService::class.java), serviceConnection
